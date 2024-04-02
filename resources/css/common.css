@@ -1,0 +1,16 @@
+.container{
+    @apply mx-auto max-w-7xl px-2 sm:px-6 lg:px-8
+}
+
+/* para las versiones mayores de tailwind no hay que hacer esto, ya que se puede declarar arriba sin problema */
+@media(min-width:640px) {
+    .container{
+        @apply px-6;
+    }
+}
+
+@media(min-width:1024px) {
+    .container{
+        @apply px-8;
+    }
+}
