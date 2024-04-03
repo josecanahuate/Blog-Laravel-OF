@@ -12,6 +12,11 @@ class Category extends Model
         //asignacion masiva admin.categories.create
         protected $fillable = ['name', 'slug']; 
 
+        public function getRouteKeyName()
+        {
+            return "slug";
+        }
+
         //relacion uno a muchos entre usuario y post
         public function posts(){    
             return $this->hasMany(Post::class);  
