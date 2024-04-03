@@ -9,6 +9,9 @@ class Category extends Model
 {
     use HasFactory;
 
+        //asignacion masiva admin.categories.create
+        protected $fillable = ['name', 'slug']; 
+
         //relacion uno a muchos entre usuario y post
         public function posts(){    
             return $this->hasMany(Post::class);  
