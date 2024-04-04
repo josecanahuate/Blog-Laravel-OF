@@ -154,7 +154,7 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
+    'layout_fixed_sidebar' => true,
     'layout_fixed_navbar' => null,
     'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
@@ -326,7 +326,15 @@ return [
             'text' => 'Categorías',
             'route' => 'admin.categories.index',
             'icon' => 'fab fa-fw fa-buffer',
+            'active' => ['admin/categories*'],
         ],
+        [
+            'text' => 'Etiquetas',
+            'route' => 'admin.tags.index',
+            'icon' => 'far fa-fw fa-bookmark',
+            'active' => ['admin/tags*'],
+        ],
+
         [
             'text' => 'change_password',
             'url' => 'admin/settings',
@@ -370,16 +378,19 @@ return [
                 ],
             ],
         ],
-        ['header' => 'labels'],
+        ['header' => 'OPCIONES DE BLOG'],
         [
-            'text' => 'important',
+            'text' => 'Lista de Posts',
             'icon_color' => 'red',
-            'url' => '#',
+            'route' => 'admin.posts.index',
+            'icon' => 'fas fa-fw fa-clipboard',
+
         ],
         [
-            'text' => 'warning',
+            'text' => 'Crear Nuevo Post',
             'icon_color' => 'yellow',
-            'url' => '#',
+            'route' => 'admin.posts.create',
+            'icon' => 'fas fa-fw fa-file',
         ],
         [
             'text' => 'information',
@@ -540,5 +551,5 @@ return [
     |
     */
 
-    'livewire' => false,
+    'livewire' => true,
 ];
