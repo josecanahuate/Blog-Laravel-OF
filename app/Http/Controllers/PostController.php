@@ -16,6 +16,8 @@ class PostController extends Controller
     }
 
     public function show(Post $post) {
+        $this->authorize('published', $post); //referencia al policy
+
         //muestra los post similares en show.blade.php
         $similares = Post::where('category_id', $post->category_id)
         ->where('status', 2) //post con status 'publicado' = 2

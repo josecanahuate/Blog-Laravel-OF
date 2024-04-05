@@ -7,14 +7,21 @@
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
-@stop
+    @if (session ('info'))
+        <div class="alert alert-success">
+            <strong>{{ session ('info') }}</strong>
+        </div>
+    @endif
 
-@section('css')
-    {{-- Add here extra stylesheets --}}
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
-@stop
+    <div class="card">
+        <div class="card-body">
+            {!! Form::model($post,['route' => ['admin.posts.update', $post], 'autocomplete' => 'off',  'files' => true, 'method' => 'put']) !!}
 
-@section('js')
-    <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
+            @include('admin.posts.partials.form')
+
+            {!! Form::submit('Actualizar Post', ['class' => 'btn btn-primary']) !!}
+
+            {!! Form::close() !!}
+        </div>
+    </div>
 @stop

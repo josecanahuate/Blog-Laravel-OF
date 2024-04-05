@@ -4,18 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePostRequest extends FormRequest
+class PostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        if($this->user_id == auth()->user()->id) {
-            return true;
-        } else {
-            abort(403, 'Unauthorized action');
-        }
+        return true;
     }
 
     /**
@@ -25,13 +21,22 @@ class StorePostRequest extends FormRequest
      */
     public function rules(): array
     {
+        //recupera la info del post, esto para el slug no repetido
+        $post = $this->route()->parameter('post'); //null
+
         //si status esta marcado como default = borrador
         $rules = [
             'name' => 'required',
             'slug' => 'required|unique:posts',
             'status' => 'required|in:1,2',
+            'file' => 'image',
         ];
     
+        if($post){
+            $rules['slug'] =  'required|unique:posts,slug,' .$post->id ;//agregamos la excepcion al slug
+        }
+
+
         //si status esta marcado como publicado
         if ($this->status == 2) {
             $rules = array_merge($rules, [

@@ -9,6 +9,13 @@
 @stop
 
 @section('content')
+
+@if (session ('info'))
+<div class="alert alert-success">
+    <strong>{{ session ('info') }}</strong>
+</div>
+@endif
+
     @livewire('admin.post-index'){{--  aca importamos la misma ruta del componente app\Livewire\Admin\PostIndex.php --}}
 @stop
 
