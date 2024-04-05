@@ -19,7 +19,9 @@ class DatabaseSeeder extends Seeder
     {
         Storage::deleteDirectory('public/posts'); //elimina la carpeta post dentro de public/storage
         Storage::makeDirectory('public/posts'); //crea la carpeta post dentro de public/storage
-        $this->call(UserSeeder::class);
+        
+        $this->call(RolSeeder::class); //roles
+        $this->call(UserSeeder::class); 
         Category::factory(4)->create();
         Tag::factory(8)->create();
         $this->call(PostSeeder::class);
