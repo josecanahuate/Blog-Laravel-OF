@@ -1,9 +1,11 @@
 @extends('adminlte::page')
 
-@section('title', 'Tristar')
+@section('title', 'Etiquetas')
 
 @section('content_header')
-    <a class="btn btn-secondary btn-sm float-right" href="{{route('admin.tags.create')}}">Nueva Etiqueta</a>
+@can('admin.tags.create')
+<a class="btn btn-primary float-right" href="{{route('admin.tags.create')}}">Nueva Etiqueta</a>
+@endcan
     <h1>Lista de Etiquetas</h1>
 @stop
 
@@ -14,39 +16,61 @@
     </div>
 @endif
 
-    <div class="card">
-        <div class="card-body">
-            <table class="table table-striped">
-                <thead>
+<div class="card">
+    <div class="card-body">
+        <table class="table table-striped table-bordered" id="categorias">
+            <thead>
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">NOMBRES</th>
+                    <th class="text-center">ACCIONES</th>
+                </tr>
+            </thead>
+        
+            <tbody>
+                @foreach ($tags as $tag)
                     <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th colspan="2"></th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @foreach ($tags as $tag)
-                        <tr>
-                            <td>{{ $tag->id}}</td>
-                            <td>{{ $tag->name}}</td>
-
-                            <td width = "10px">
-                                <a class="btn btn-primary btn-sm" href="{{route('admin.tags.edit', $tag)}}">Editar</a>
-                            </td>
-                            <td width = "10px">
-                            <form action="{{route('admin.tags.destroy', $tag)}}" method="POST">
-                                @csrf
-                                @method("delete") 
-                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                            </form>
+                        <td class="text-center">{{$tag->id}}</td>
+                        <td class="text-center">{{$tag->name}}</td>
+                        <td> <!-- Nueva celda para acciones -->
+                            <div class="d-flex justify-content-end">
+                                @can('admin.tags.edit')
+                                    <a class="btn btn-primary btn-sm mr-2" href="{{route('admin.tags.edit', $tag)}}">EDITAR</a>
+                                @endcan
+                                @can('admin.tags.destroy')
+                                    <form action="{{route('admin.tags.destroy', $tag)}}" method="POST">
+                                        @csrf
+                                        @method("DELETE")
+                                        <button type="submit" class="btn btn-danger btn-sm">BORRAR</button>
+                                    </form>
+                                @endcan
+                            </div>
                         </td>
-
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
+</div>
 @stop
+
+@section('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap4.css">
+@stop
+
+@section('js')
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap4.js"></script>
+    
+    <script>
+        new DataTable('#etiquetas');
+    </script>
+@stop
+
+
+
 

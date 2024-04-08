@@ -3,6 +3,9 @@
 @section('title', 'Tristar')
 
 @section('content_header')
+    @can('admin.categories.create')
+    <a class="btn btn-primary float-right" href="{{route('admin.categories.create')}}">Agregar Categoría</a>
+    @endcan
     <h1>Lista de Categorias</h1>
 @stop
 
@@ -15,34 +18,34 @@
 @endif
 
     <div class="card">
-        <div class="card-header">
-            <a class="btn btn-primary btn-sm" href="{{route('admin.categories.create')}}">Agregar Categoría</a>
-        </div>
-
         <div class="card-body">
-            <table class="table table-striped">
+            <table class="table table-striped table-bordered" id="categorias">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>NAME</th>
-                        <th colspan="2"></th>
+                        <th class="text-center">ID</th>
+                        <th class="text-center">NOMBRES</th>
+                        <th class="text-center">ACCIONES</th>
                     </tr>
                 </thead>
-
+            
                 <tbody>
                     @foreach ($categories as $category)
                         <tr>
-                            <td>{{$category->id}}</td>
-                            <td>{{$category->name}}</td>
-                            <td width="10px">
-                                <a class="btn btn-primary btn-sm" href="{{route('admin.categories.edit', $category)}}">EDITAR</a>
-                            </td>
-                            <td width="10px">
-                                <form action="{{route('admin.categories.destroy', $category)}}" method="POST">
-                                    @csrf
-                                    @method("DELETE")
-                                    <button type="submit" class="btn btn-danger btn-sm">Borrar</button>
-                                </form>
+                            <td class="text-center">{{$category->id}}</td>
+                            <td class="text-center">{{$category->name}}</td>
+                            <td> <!-- Nueva celda para acciones -->
+                                <div class="d-flex justify-content-end">
+                                    @can('admin.categories.edit')
+                                        <a class="btn btn-primary btn-sm mr-2" href="{{route('admin.categories.edit', $category)}}">EDITAR</a>
+                                    @endcan
+                                    @can('admin.categories.destroy')
+                                        <form action="{{route('admin.categories.destroy', $category)}}" method="POST">
+                                            @csrf
+                                            @method("DELETE")
+                                            <button type="submit" class="btn btn-danger btn-sm">BORRAR</button>
+                                        </form>
+                                    @endcan
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -53,12 +56,19 @@
 @stop
 
 
-
 @section('css')
-    {{-- Add here extra stylesheets --}}
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap4.css">
 @stop
 
 @section('js')
-    <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap4.js"></script>
+    
+    <script>
+        new DataTable('#categorias');
+    </script>
 @stop

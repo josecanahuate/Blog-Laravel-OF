@@ -44,10 +44,6 @@
 
                     <div class="hidden sm:ml-6 sm:block">
                         <div class="flex space-x-4">
-                            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                            {{--      <a href="#" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
-                                aria-current="page">Dashboard</a> --}}
-
                             @foreach ($categories as $category)
                                 <a href="{{route( 'posts.category', $category)}}"
                                     class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">{{ $category->name }}</a>
@@ -88,11 +84,13 @@
                                 <!-- Active: "bg-gray-100", Not Active: "" -->
                                 <a href="{{ route('profile.show') }}" class="block px-4 py-2 text-sm text-gray-700"
                                     role="menuitem" tabindex="-1" id="user-menu-item-0">Tu Perfil</a>
-                                    
-                                <a href="{{ route('admin.home') }}" class="block px-4 py-2 text-sm text-gray-700"
-                                    role="menuitem" tabindex="-1" id="user-menu-item-0">Dashboard</a>
 
-                                {{-- <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a> --}}
+                                @can('admin.home')
+                                <a href="{{ route('admin.home') }}" class="block px-4 py-2 text-sm text-gray-700" 
+                                role="menuitem" tabindex="-1" id="user-menu-item-0">Dashboard</a>
+                                @endcan
+
+
                                 <!-- Authentication -->
                                 <form method="POST" action="{{ route('logout') }}" x-data>
                                     @csrf
@@ -126,8 +124,11 @@
         <div class="sm:hidden" id="mobile-menu" x-show="open" x-on:click.away="open = false">
             <div class="space-y-1 px-2 pb-3 pt-2">
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                {{-- <a href="#" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
-                    aria-current="page">Dashboard</a> --}}
+                @can('admin.home')
+                <a href="{{ route('admin.home') }}" class="block px-4 py-2 text-sm text-gray-700"
+                role="menuitem" tabindex="-1" id="user-menu-item-0">Dashboard</a>
+                @endcan
+
                 @foreach ($categories as $category)
                     <a href="{{route( 'posts.category', $category)}}"
                         class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">{{ $category->name }}</a>
