@@ -3,7 +3,7 @@
 @section('title', 'Tristar')
 
 @section('content_header')
-    <a href="/admin/roles" class="btn btn-secondary btn-sm float-right">Volver</a>
+    <a href="/admin/roles" class="btn btn-secondary float-right">Volver</a>
     <h1>Crear Nuevo Rol</h1>
 @stop
 

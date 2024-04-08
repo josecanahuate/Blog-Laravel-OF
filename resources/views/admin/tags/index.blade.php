@@ -18,7 +18,7 @@
 
 <div class="card">
     <div class="card-body">
-        <table class="table table-striped table-bordered" id="categorias">
+        <table class="table table-striped table-bordered" id="etiquetas">
             <thead>
                 <tr>
                     <th class="text-center">ID</th>

@@ -19,20 +19,29 @@
 
         <tbody>
             @foreach ($users as $user)
-                <tr>
-                    <td>{{$user->id}}</td>
-                    <td>{{$user->name}}</td>
-                    <td>{{$user->email}}</td>
-                    <td width="10px">
-                        <a class="btn btn-primary btn-sm" href="{{route('admin.users.edit', $user)}}">Editar</a>
-                    </td>
-                </tr>
+            <tr>
+                <td class="text-center">{{$user->id}}</td>
+                <td class="text-center">{{$user->name}}</td>
+                <td>{{$user->email}}</td>
+                <td> <!-- Nueva celda para acciones -->
+                    <div class="d-flex justify-content-end">
+                        
+                        @can('admin.users.edit')
+                            <a class="btn btn-primary btn-sm mr-2" href="{{route('admin.users.edit', $user)}}">EDITAR</a>
+                        @endcan
 
-                <form action="">
-                    @csrf
-                    @method('DELETE')
-                </form>
-            @endforeach
+                        @can('admin.users.destroy')
+                            <form action="{{route('admin.users.destroy', $user)}}" method="POST">
+                                @csrf
+                                @method("DELETE")
+                                <button type="submit" class="btn btn-danger btn-sm">BORRAR</button>
+                            </form>
+                        @endcan
+                        
+                    </div>
+                </td>
+            </tr>
+        @endforeach
         </tbody>
     </table>
 </div>
