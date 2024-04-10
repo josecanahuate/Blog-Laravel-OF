@@ -27,19 +27,10 @@
         
         <div class="form-group">
             <h2>Listado de Roles</h2>
-{{--             @foreach ($roles as $role)
-            <div>
-                <label>
-                    {{ Form::checkbox('roles[]', $role->id, null, ['class' => 'mr-1'] ) }}
-                    {{ $role->name }}
-                </label>
-            </div>
-            @endforeach --}}
-
             @foreach ($roles as $role)
             <div>
                 <label>
-                    {{ Form::checkbox('roles[]', $role->name, null, ['class' => 'mr-1'] ) }}
+                    {{ Form::checkbox('roles[]', $role->id, null, ['class' => 'mr-1'] ) }}
                     {{ $role->name }}
                 </label>
             </div>

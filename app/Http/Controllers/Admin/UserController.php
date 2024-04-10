@@ -46,8 +46,8 @@ class UserController extends Controller
         'password' => bcrypt($request->password),
         ]);
 
-        // Asigna los roles seleccionados al nuevo usuario
-        $user->assignRole($request->roles);
+        // Asignar rol al nuevo usuario
+        $user->roles()->sync($request->roles);
 
         // Redirecciona a alguna página después de la creación exitosa
         return redirect()->route('admin.users.index')->with('success', 'Usuario creado exitosamente');  
